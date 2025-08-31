@@ -1,0 +1,1 @@
+# Remix Generation tests initialization
