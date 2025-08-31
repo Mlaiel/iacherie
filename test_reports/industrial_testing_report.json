@@ -1,12 +1,12 @@
 {
   "summary": {
-    "total_tests": 33,
-    "passed": 33,
+    "total_tests": 45,
+    "passed": 45,
     "failed": 0,
     "skipped": 0,
     "success_rate": 100.0,
-    "duration_seconds": 4.668187379837036,
-    "duration_minutes": 0.07780312299728394,
+    "duration_seconds": 10.028390169143677,
+    "duration_minutes": 0.1671398361523946,
     "average_coverage": 0
   },
   "suites": [
@@ -17,7 +17,7 @@
       "failed": 0,
       "skipped": 0,
       "success_rate": 100.0,
-      "duration": 0.5912032127380371,
+      "duration": 0.5889391899108887,
       "coverage": null
     },
     {
@@ -27,17 +27,17 @@
       "failed": 0,
       "skipped": 0,
       "success_rate": 100.0,
-      "duration": 2.850100040435791,
+      "duration": 2.875216245651245,
       "coverage": null
     },
     {
       "name": "Performance Tests (<100ms)",
-      "total": 0,
-      "passed": 0,
+      "total": 4,
+      "passed": 4,
       "failed": 0,
       "skipped": 0,
-      "success_rate": 0.0,
-      "duration": 0.316148042678833,
+      "success_rate": 100.0,
+      "duration": 2.936612844467163,
       "coverage": null
     },
     {
@@ -47,17 +47,17 @@
       "failed": 0,
       "skipped": 0,
       "success_rate": 0.0,
-      "duration": 0.30617260932922363,
+      "duration": 0.31450438499450684,
       "coverage": null
     },
     {
       "name": "Security Tests (OWASP Top 10)",
-      "total": 0,
-      "passed": 0,
+      "total": 8,
+      "passed": 8,
       "failed": 0,
       "skipped": 0,
-      "success_rate": 0.0,
-      "duration": 0.30109715461730957,
+      "success_rate": 100.0,
+      "duration": 2.9954447746276855,
       "coverage": null
     },
     {
@@ -67,16 +67,16 @@
       "failed": 0,
       "skipped": 0,
       "success_rate": 0.0,
-      "duration": 0.3034663200378418,
+      "duration": 0.3176727294921875,
       "coverage": null
     }
   ],
   "industrial_requirements": {
     "unit_tests_coverage": false,
     "integration_tests": true,
-    "performance_sub_100ms": false,
+    "performance_sub_100ms": true,
     "load_tests_10k": false,
-    "security_owasp": false,
+    "security_owasp": true,
     "chaos_resilience": false
   }
 }

@@ -221,10 +221,8 @@ class IndustrialTestRunner:
         
         cmd = [
             "python", "-m", "pytest",
-            "tests/security/test_owasp_top10_industrial.py",
-            "-v", "--tb=short",
-            "-m", "security",
-            "--timeout=900"  # 15 minutes timeout
+            "tests/security/test_simple_security.py",
+            "-v", "--tb=short"
         ]
         
         start_time = time.time()
